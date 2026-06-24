@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+<defs>
+<linearGradient id="a" x1="0" y1="0" x2="0" y2="100%">
+	<stop offset="0" stop-color="rgba(0 0 0/10%)"/>
+	<stop offset="1" stop-color="rgba(0 0 0/5%)"/>
+</linearGradient>
+<linearGradient id="a2" x1="0" y1="0" x2="100%" y2="0">
+	<stop offset="0" stop-color="rgba(0 0 0/0%)"/>
+	<stop offset=".5" stop-color="rgba(0 0 0/10%)"/>
+	<stop offset="1" stop-color="rgba(0 0 0/0%)"/>
+</linearGradient>
+</defs>
+<clipPath id="c">
+	<path id="b" transform="translate(-8,-8)scale(.64)" d="M35 73.3c7-6.6 12.1-12.5 12.4-18.1 0-4.5-11.3-1.5-10.5-8.5C38.2 36.5 52.5 29.1 68 22H31.8c-1.1 3.5-3.8 6.3-7.4 7.4v24c.1 11.2 4.8 16.1 10.6 19.9zm33.5-50.2C52.6 34.7 46.3 43.2 58.4 45.6c9 1.7 7.7 7.5 2.2 13.3-4.6 4-13.5 9.6-23.6 15.5.8.5 1.7 1 2.6 1.5L50 82l10.5-6.1c7.7-4.4 15-8.6 15-22.6v-24c-3.2-.9-5.7-3.2-7-6.2z"/>
+</clipPath>
+<!-- <rect fill="#fff" width="100%" height="100%"/> -->
+<use xlink:href="#b" fill="url(#a)"/>
+<style>
+#d{animation:x 3000ms linear infinite;}
+@keyframes x{
+	0%{transform:translateX(-50%);opcity:0;}
+	50%{opcity:1;}
+	100%{transform:translateX(150%);opacity:0;}
+}
+</style>
+<g clip-path="url(#c)"><rect id="d" fill="url(#a2)" width="50%" height="100%"/></g>
+</svg>
