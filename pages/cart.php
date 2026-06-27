@@ -114,11 +114,18 @@ include __DIR__ . '/../includes/header.php';
                         $subtotal += $item_total;
                         
                         $fields_data = json_decode($item['custom_fields'], true);
+                        $product_image = resolve_product_image_url([
+                            'name' => $item['product_name'],
+                            'slug' => $item['product_slug'],
+                            'image_url' => $item['image_url']
+                        ]);
                     ?>
                         <div style="background: rgba(30, 41, 59, 0.5); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); padding: 20px; display: flex; gap: 20px; align-items: center; position: relative;">
                             
                             <!-- Product Image -->
-                            <div class="rpl-empty-cart-thumb" aria-label="Gambar produk kosong"></div>
+                            <div class="rpl-empty-cart-thumb" style="overflow:hidden; background:#111827;">
+                                <img src="<?= $path_prefix . htmlspecialchars($product_image) ?>" alt="<?= htmlspecialchars($item['product_name']) ?>" style="width:100%; height:100%; object-fit:cover; display:block;">
+                            </div>
                             
                             <!-- Product Details -->
                             <div style="flex: 1;">

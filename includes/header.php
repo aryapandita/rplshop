@@ -296,21 +296,31 @@ if (is_logged_in()) {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 2.2em;
-            height: 2.2em;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, .08);
-            border: 1px solid rgba(255, 255, 255, .15);
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .09);
+            border: 1px solid rgba(255, 255, 255, .16);
             transition: all 0.25s ease;
             flex-shrink: 0;
+            color: #fff;
+            text-decoration: none;
         }
         .cart-icon-wrapper:hover {
-            background: rgba(255, 255, 255, .12);
-            border-color: rgba(255, 255, 255, .25);
+            background: rgba(255, 196, 0, .14);
+            border-color: rgba(255, 196, 0, .45);
+            color: #FFC400;
         }
-        .cart-icon-wrapper span[icon-only="shopping_cart"] {
-            font-size: 18px;
-            color: #fff;
+        .cart-icon-wrapper [icon-only] {
+            display: block;
+            width: 22px;
+            height: 22px;
+            overflow: hidden;
+        }
+        .cart-icon-wrapper [icon-only]::before {
+            content: attr(icon-only);
+            font-size: 22px;
+            color: currentColor;
         }
         .cart-badge {
             position: absolute;
@@ -331,31 +341,93 @@ if (is_logged_in()) {
         }
 
         /* User */
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+        }
         .user_info_box {
             background: rgba(255, 255, 255, .08);
             border: 1px solid rgba(255, 255, 255, .15);
-            border-radius: 6px;
-            padding: 3px 10px 3px 3px;
-            height: 2.4em;
+            border-radius: 8px;
+            padding: 4px 10px 4px 4px;
+            height: 36px;
             transition: all 0.25s ease;
             cursor: pointer;
             flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 190px;
+            box-sizing: border-box;
         }
         .user_info_box:hover {
             background: rgba(255, 255, 255, .12);
             border-color: rgba(255, 255, 255, .25);
         }
         .user_info_box img {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, .15);
+            background: rgba(255, 255, 255, .1);
+            flex: none;
         }
         .user_info_box span {
             font-size: 11px;
             font-weight: 600;
             color: #fff;
             letter-spacing: 0.2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            min-width: 0;
+        }
+        .header-logout-btn {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(239, 68, 68, .11);
+            border: 1px solid rgba(239, 68, 68, .32);
+            color: #fca5a5;
+            text-decoration: none;
+            transition: all .2s ease;
+            flex-shrink: 0;
+        }
+        .header-logout-btn:hover {
+            background: rgba(239, 68, 68, .2);
+            border-color: rgba(239, 68, 68, .5);
+            color: #fff;
+        }
+        .header-logout-btn [icon-only] {
+            display: block;
+            width: 22px;
+            height: 22px;
+            overflow: hidden;
+        }
+        .header-logout-btn [icon-only]::before {
+            content: attr(icon-only);
+            font-size: 22px;
+            color: currentColor;
+        }
+        .rpl-flash {
+            max-width: 1000px;
+            margin: 18px auto 0;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .rpl-flash-inner {
+            border: 1px solid rgba(16, 185, 129, .55);
+            border-radius: 8px;
+            background: rgba(16, 185, 129, .14);
+            color: #a7f3d0;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         /* Right section wrapper */
@@ -596,8 +668,8 @@ if (is_logged_in()) {
                             </label>
                         </form>
                     </div>
-                    <a href="<?= $path_prefix ?>pages/cart.php" class="cart-icon-wrapper" title="Keranjang">
-                        <span icon-only="shopping_cart" style="font-size:18px;color:#fff;"></span>
+                    <a href="<?= $path_prefix ?>pages/cart.php" class="cart-icon-wrapper" title="Keranjang" aria-label="Keranjang">
+                        <span icon-only="shopping_cart"></span>
                         <?php if ($cart_count > 0): ?>
                             <span class="cart-badge"><?= $cart_count ?></span>
                         <?php endif; ?>
@@ -608,6 +680,9 @@ if (is_logged_in()) {
                                 <img src="<?= $path_prefix ?>assets/images/placeholder/avatar_default-c4b39b0bde.svg" alt="Avatar">
                                 <span><?= htmlspecialchars($_SESSION['user_username']) ?></span>
                             </div>
+                            <a href="<?= $path_prefix ?>auth/logout.php" class="header-logout-btn" title="Keluar" aria-label="Keluar">
+                                <span icon-only="power_settings_new"></span>
+                            </a>
                             <section id="user_dropdown">
                                 <div class="user_dropdown_ctrl_off"></div>
                                 <div class="inner">
@@ -649,3 +724,8 @@ if (is_logged_in()) {
         </div>
     </div>
 </header>
+<?php if (isset($_GET['logout']) && $_GET['logout'] === '1'): ?>
+    <div class="rpl-flash">
+        <div class="rpl-flash-inner">Anda berhasil logout dari RPLShop.</div>
+    </div>
+<?php endif; ?>

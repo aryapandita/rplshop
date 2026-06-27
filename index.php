@@ -1,41 +1,50 @@
 <?php
-// index.php - RPLShop Homepage
+// index.php - RPLShop router and dynamic homepage loader
 $path_prefix = '';
 $page_title = 'RPLShop - Game Top-Up, Gift Card & Voucher | Game Credits | Mobile Games';
 
 require_once __DIR__ . '/includes/functions.php';
 
-// Add extra CSS file for homepage
 $extra_css = ['home-af890912ab.css', 'coupon-1ff5107c71.css'];
 
-include __DIR__ . '/includes/header.php';
+$request_path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$base_path = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
 
-// Fetch dynamic products for sections
-// 1. Exclusive Offers (Products with packages having discounts)
-$stmt = $pdo->query("SELECT p.*, pp.name as package_name, pp.price, pp.discount_percent, pp.id as package_id 
-                     FROM products p 
-                     JOIN product_packages pp ON p.id = pp.product_id 
-                     WHERE pp.discount_percent > 0 
-                     ORDER BY pp.discount_percent DESC 
+if ($base_path !== '' && $base_path !== '/' && strpos($request_path, $base_path) === 0) {
+    $request_path = substr($request_path, strlen($base_path));
+}
+
+$route = trim($request_path, '/');
+
+
+if (!in_array($route, ['', 'index.php'], true)) {
+    http_response_code(404);
+    echo 'Halaman tidak ditemukan.';
+    exit;
+}
+
+// Dynamic data for homepage sections.
+$stmt = $pdo->query("SELECT p.*, pp.name as package_name, pp.price, pp.discount_percent, pp.id as package_id
+                     FROM products p
+                     JOIN product_packages pp ON p.id = pp.product_id
+                     WHERE pp.discount_percent > 0
+                     ORDER BY pp.discount_percent DESC
                      LIMIT 10");
 $special_deals = $stmt->fetchAll();
 
-// 2. Popular Games (Category id 5, 6, 10, 11)
 $popular_games = get_products($pdo, 'game', null, 6);
-
-// 3. Popular Game Cards (Category id 7, 8, 9)
 $popular_cards = get_products($pdo, 'card', null, 6);
-
-// 4. Popular Game Top-Up (Category id 10, 11, 12, 5)
 $popular_topups = get_products($pdo, 'direct-topup', null, 6);
-
-// 5. Popular Mobile Recharge (Category id 4)
 $popular_recharges = get_products($pdo, 'mobile-recharge', null, 6);
 
-// 6. Specific products for featured sections
 $featured_ml = get_product_by_slug($pdo, 'mobile-legends-diamonds');
 $featured_steam = get_product_by_slug($pdo, 'steam-wallet-code-idr');
 $featured_razer = get_product_by_slug($pdo, 'razer-gold-idr');
+
+// ==========================================================
+// TAMPILAN HALAMAN UTAMA (Berada dalam satu file)
+// ==========================================================
+include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- Load swiper stylesheet & script -->
@@ -146,7 +155,6 @@ $featured_razer = get_product_by_slug($pdo, 'razer-gold-idr');
         box-shadow: 0 12px 32px rgba(0, 0, 0, .14);
     }
 
-    /* Beri jarak dalam agar konten tidak mepet/mentok ke tepi box */
     #special_deals {
         padding: 1.75em 1.5em;
         box-sizing: border-box;
@@ -161,7 +169,6 @@ $featured_razer = get_product_by_slug($pdo, 'razer-gold-idr');
         padding-block-start: 0.75em;
     }
 
-    /* Coupon card spacing */
     #new_coupons .coupon {
         padding: 14px 16px;
         border-radius: 10px;
@@ -244,7 +251,6 @@ $featured_razer = get_product_by_slug($pdo, 'razer-gold-idr');
             padding: 1.5em 1.1em;
         }
     }
-
 
     #special_deals .title,
     #new_coupons .title,
@@ -347,17 +353,17 @@ $featured_razer = get_product_by_slug($pdo, 'razer-gold-idr');
                 </div>
                 <div class="slide swiper-slide">
                     <a class="img" href="pages/products.php?category=game" title="New Game Launch">
-                        <div class="rpl-empty-media" style="width:100%;height:100%;min-height:200px;"></div>
+                        <img src="assets/media/game_480/genshin.jpg" alt="Genshin Impact" style="width:100%;height:100%;object-fit:cover;object-position:center;">
                     </a>
                 </div>
                 <div class="slide swiper-slide">
                     <a class="img" href="pages/products.php?category=mobile-game-topup" title="Top-Up Mobile Game">
-                        <div class="rpl-empty-media" style="width:100%;height:100%;min-height:200px;"></div>
+                        <img src="assets/media/game_480/pubg-mobile.jpg" alt="PUBG Mobile" style="width:100%;height:100%;object-fit:cover;object-position:center;">
                     </a>
                 </div>
                 <div class="slide swiper-slide">
                     <a class="img" href="#special_deals" title="June 2026 Coupon Deals">
-                        <div class="rpl-empty-media" style="width:100%;height:100%;min-height:200px;"></div>
+                        <img src="assets/media/game_480/valorant.jpg" alt="Valorant" style="width:100%;height:100%;object-fit:cover;object-position:center;">
                     </a>
                 </div>
             </div>
@@ -584,7 +590,7 @@ $featured_razer = get_product_by_slug($pdo, 'razer-gold-idr');
             <div class="NewsList" style="gap: 20px;">
                 <a class="news" href="pages/products.php" title="Promo Hemat RPLShop">
                     <div class="img" style="border-radius: 8px; overflow: hidden;">
-                        <div class="rpl-empty-media" style="width:100%;height:100%;min-height:130px;"></div>
+                        <img src="assets/media/game_480/free-fire.jpg" alt="Promo RPLShop" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="headline" style="padding: 0 2px;">Nikmati Lebih Banyak Hemat Belanja di RPLShop Bulan Juni Ini!</div>
                 </a>
@@ -600,7 +606,7 @@ $featured_razer = get_product_by_slug($pdo, 'razer-gold-idr');
                 </a>
                 <a class="news" href="pages/products.php?category=mobile-game-topup" title="Top-Up Mobile Game">
                     <div class="img" style="border-radius: 8px; overflow: hidden;">
-                        <div class="rpl-empty-media" style="width:100%;height:100%;min-height:130px;"></div>
+                        <img src="assets/media/game_480/pubg-mobile.jpg" alt="Top-Up Mobile Game" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="headline" style="padding: 0 2px;">Produk top-up mobile game favorit tersedia dengan proses checkout singkat.</div>
                 </a>

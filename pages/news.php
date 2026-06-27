@@ -54,8 +54,8 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- News Item 1 -->
             <a href="products.php?category=mobile-game-topup" style="text-decoration: none; background: rgba(30, 41, 59, 0.5); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; transition: transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='rgba(255,196,0,0.3)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.06)';">
-                <div style="height: 160px; background: linear-gradient(135deg, #1e3a5f, #0f172a); display: flex; align-items: center; justify-content: center;">
-                    <span icon="sports_esports" style="font-size: 48px; color: rgba(255,255,255,0.15);"></span>
+                <div style="height: 160px; background:#111827; overflow:hidden;">
+                    <img src="<?= $path_prefix ?>assets/media/game_480/mobile-legends.jpg" alt="Mobile Legends" style="width:100%; height:100%; object-fit:cover; display:block;">
                 </div>
                 <div style="padding: 20px;">
                     <div style="font-size: 11px; color: #FFC400; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Event Game</div>
@@ -67,8 +67,8 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- News Item 2 -->
             <a href="products.php?category=gift-cards" style="text-decoration: none; background: rgba(30, 41, 59, 0.5); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; transition: transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='rgba(255,196,0,0.3)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.06)';">
-                <div style="height: 160px; background: linear-gradient(135deg, #2d1b4e, #0f172a); display: flex; align-items: center; justify-content: center;">
-                    <span icon="redeem" style="font-size: 48px; color: rgba(255,255,255,0.15);"></span>
+                <div style="height: 160px; background:#111827; overflow:hidden;">
+                    <img src="<?= $path_prefix ?>assets/media/game_480/roblox.jpg" alt="Gift Card" style="width:100%; height:100%; object-fit:cover; display:block;">
                 </div>
                 <div style="padding: 20px;">
                     <div style="font-size: 11px; color: #a855f7; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Gift Card</div>
@@ -80,8 +80,8 @@ include __DIR__ . '/../includes/header.php';
 
             <!-- News Item 3 -->
             <a href="products.php" style="text-decoration: none; background: rgba(30, 41, 59, 0.5); border-radius: 14px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; transition: transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.borderColor='rgba(255,196,0,0.3)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.06)';">
-                <div style="height: 160px; background: linear-gradient(135deg, #1b3a2f, #0f172a); display: flex; align-items: center; justify-content: center;">
-                    <span icon="payments" style="font-size: 48px; color: rgba(255,255,255,0.15);"></span>
+                <div style="height: 160px; background:#111827; overflow:hidden;">
+                    <img src="<?= $path_prefix ?>assets/media/game_480/pubg-mobile.jpg" alt="Promo RPLShop" style="width:100%; height:100%; object-fit:cover; display:block;">
                 </div>
                 <div style="padding: 20px;">
                     <div style="font-size: 11px; color: #10b981; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Promo</div>
@@ -99,7 +99,9 @@ include __DIR__ . '/../includes/header.php';
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px;">
             <?php foreach ($latest_products as $prod): ?>
                 <a href="product-detail.php?slug=<?= $prod['slug'] ?>" style="text-decoration: none; background: rgba(30, 41, 59, 0.5); border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); padding: 18px 14px; text-align: center; transition: transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='rgba(255,196,0,0.3)';" onmouseout="this.style.transform='none'; this.style.borderColor='rgba(255,255,255,0.06)';">
-                    <div style="width: 50px; height: 50px; border: 1px dashed rgba(255,255,255,0.15); border-radius: 10px; background: #111827; margin: 0 auto 12px auto;"></div>
+                    <div style="width: 64px; height: 64px; border-radius: 10px; background: #111827; margin: 0 auto 12px auto; overflow:hidden; border: 1px solid rgba(255,255,255,0.08);">
+                        <img src="<?= $path_prefix . htmlspecialchars(resolve_product_image_url($prod)) ?>" alt="<?= htmlspecialchars($prod['name']) ?>" style="width:100%; height:100%; object-fit:cover; display:block;">
+                    </div>
                     <div style="color: #fff; font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 4px;"><?= htmlspecialchars($prod['name']) ?></div>
                     <div style="color: #94a3b8; font-size: 11px;"><?= htmlspecialchars($prod['region']) ?></div>
                 </a>

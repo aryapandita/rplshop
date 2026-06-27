@@ -112,6 +112,10 @@ function resolve_product_image_url($product) {
         'valorant-points' => 'assets/media/game_480/valorant.jpg',
         'roblox-gift-card-usd' => 'assets/media/game_480/roblox.jpg',
         'razer-gold-idr' => 'assets/media/game_480/razer-gold.jpg',
+        'telkomsel-pulsa' => 'assets/media/game_480/telkomsel-pulsa.jpg',
+        'xl-pulsa' => 'assets/media/game_480/xl-pulsa.jpg',
+        'indosat-pulsa' => 'assets/media/game_480/indosat-pulsa.jpg',
+        'smartfren-pulsa' => 'assets/media/game_480/smartfren-pulsa.jpg',
     ];
 
     $gameNameMapping = [
@@ -126,6 +130,10 @@ function resolve_product_image_url($product) {
         'valorant' => 'assets/media/game_480/valorant.jpg',
         'roblox' => 'assets/media/game_480/roblox.jpg',
         'razer gold' => 'assets/media/game_480/razer-gold.jpg',
+        'telkomsel' => 'assets/media/game_480/telkomsel-pulsa.jpg',
+        'xl pulsa' => 'assets/media/game_480/xl-pulsa.jpg',
+        'indosat' => 'assets/media/game_480/indosat-pulsa.jpg',
+        'smartfren' => 'assets/media/game_480/smartfren-pulsa.jpg',
     ];
 
     if (!empty($product['image_url'])) {
@@ -139,12 +147,15 @@ function resolve_product_image_url($product) {
 
     $slugKey = !empty($product['slug']) ? strtolower(trim($product['slug'])) : '';
     if ($slugKey && isset($defaultGameImages[$slugKey])) {
-        return $defaultGameImages[$slugKey];
+        $mappedPath = $defaultGameImages[$slugKey];
+        if (file_exists(__DIR__ . '/../' . $mappedPath)) {
+            return $mappedPath;
+        }
     }
 
     $nameKey = !empty($product['name']) ? strtolower($product['name']) : '';
     foreach ($gameNameMapping as $gameTerm => $imagePath) {
-        if (strpos($nameKey, $gameTerm) !== false) {
+        if (strpos($nameKey, $gameTerm) !== false && file_exists(__DIR__ . '/../' . $imagePath)) {
             return $imagePath;
         }
     }
